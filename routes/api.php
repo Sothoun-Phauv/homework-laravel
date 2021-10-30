@@ -21,11 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //public
-Route::post('users',[UserController::class],'register');
-Route::post('users',[UserController::class],'login');
+Route::get('posts/{id}',[ControllerStudent::class,'show']);
+Route::get('posts',[ControllerStudent::class,'index']);
+Route::get('users',[UserController::class,'index']);
+Route::post('register',[UserController::class,'register']);
+Route::post('login',[UserController::class,'login']);
 
 //private route
 Route::group(['middleware'=>['auth:sanctum']],function(){
     //user
-    Route::Post('users',[UserController::class],'logout');
+    Route::post('posts',[ControllerStudent::class,'store']);
+    Route::put('posts/{id}',[ControllerStudent::class,'update']);
+    Route::delete('posts/{id}',[ControllerStudent::class,'destroy']);
+
+    Route::Post('logout',[UserController::class],'logout');
 });
